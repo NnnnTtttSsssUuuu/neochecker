@@ -31,6 +31,8 @@
   let criteriaTextGreen = [];
   let criteriaTextGreen2 = [];
   let criteriaCSV = [];
+  let criteriaTextMulti = [];
+
 
   //立ち上げ時の処理
   document.addEventListener("DOMContentLoaded", function () {
@@ -39,6 +41,7 @@
     const openSafuchuFile = safuchuFileName.textContent;
     const criteriaInputFileName = document.getElementById('criteriaInputFileName');
     const openCriteriaFile = criteriaInputFileName.textContent;
+    console.log("読み込みファイル名",openCriteriaFile);
 
     fetch(openSafuchuFile)
       .then(response => {
@@ -78,14 +81,31 @@
   });
 
 
+  //検索ワードを単一配列にする
+//  for (let i = 0; i < criteriaTextYellow.length; i++){
+//   criteriaTextMulti[i] = criteriaTextYellow[i];
+//   // console.log("criteriaMulti",criteriaTextMulti);
+//   criteriaTextMulti[i][1] = "yellow";
+//  }
+
+
   //リアルタイムで変換する
   let tid;
   delay = 500;
   document.querySelector('#input').addEventListener('keyup', function () {
     tid && clearTimeout(tid);
     tid = setTimeout(hyokiCheck, delay);
+
+
   });
 
+  for (let i = 0; i < criteriaTextYellow.length; i++){
+    criteriaTextMulti[i] = criteriaTextYellow[i];
+    console.log("criteriaMulti",criteriaTextMulti);
+    // criteriaTextMulti[i][1] = "yellow";
+   }
+
+   
 
   // チェックボタン押下の処理
   // document.querySelector('#checkButton').addEventListener('click', () => {
@@ -167,6 +187,53 @@
         }
         continue;
       }
+
+
+
+      //マルチ色付け
+      // if (criteriaTextMulti) {
+      //   criteriaTextMulti.forEach((value, index) => {
+      //     if (inputText.startsWith(value, i) && checked === "" && value.length > 0) {
+      //       c = value;
+      //       i = i + value.length - 1;
+      //       switch (color) {
+      //         case "kiami":
+      //           klass.push("kiami note-container");
+      //           checked = "check";
+      //           let checkit = countYellow[index];
+      //           countYellow.fill(checkit + 1, index, index + 1);
+      //           if (criteriaTextOrange[index]) {
+      //             chuki = criteriaTextOrange[index];
+      //           } else {
+      //             chuki = "";
+      //           }
+      //         case "aoami":
+      //           klass.push("aoami note-container");
+      //           checked = "check";
+      //           let checkit = countBlue[index];
+      //           countBlue.fill(checkit + 1, index, index + 1);
+      //           chuki = "◀︎" + criteriaTextRed[index];
+      //         case "akaami":
+      //           klass.push("akaami note-container");
+      //           checked = "check";
+      //           let checkit = countRed[index];
+      //           countRed.fill(checkit + 1, index, index + 1);
+      //           chuki = "▶︎" + criteriaTextBlue[index];
+      //         case "greenami":
+      //           klass.push("greenami note-container");
+      //           checked = "check";
+      //           let checkit = countGreen[index];
+      //           countGreen.fill(checkit + 1, index, index + 1);
+      //           if (criteriaTextGreen2[index]) {
+      //             chuki = criteriaTextGreen2[index];
+      //           } else {
+      //             chuki = "";
+      //           }
+      //         default:
+      //       }
+      //     }
+      //   });
+      // }
 
 
       //色付け
