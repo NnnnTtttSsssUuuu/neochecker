@@ -41,7 +41,6 @@
     const openSafuchuFile = safuchuFileName.textContent;
     const criteriaInputFileName = document.getElementById('criteriaInputFileName');
     const openCriteriaFile = criteriaInputFileName.textContent;
-    console.log("読み込みファイル名",openCriteriaFile);
 
     fetch(openSafuchuFile)
       .then(response => {
@@ -81,12 +80,6 @@
   });
 
 
-  //検索ワードを単一配列にする
-//  for (let i = 0; i < criteriaTextYellow.length; i++){
-//   criteriaTextMulti[i] = criteriaTextYellow[i];
-//   // console.log("criteriaMulti",criteriaTextMulti);
-//   criteriaTextMulti[i][1] = "yellow";
-//  }
 
 
   //リアルタイムで変換する
@@ -99,13 +92,13 @@
 
   });
 
-  for (let i = 0; i < criteriaTextYellow.length; i++){
-    criteriaTextMulti[i] = criteriaTextYellow[i];
-    console.log("criteriaMulti",criteriaTextMulti);
-    // criteriaTextMulti[i][1] = "yellow";
-   }
+  // for (let i = 0; i < criteriaTextYellow.length; i++) {
+  //   criteriaTextMulti[i] = criteriaTextYellow[i];
+  //   console.log("criteriaMulti", criteriaTextMulti);
+  //   // criteriaTextMulti[i][1] = "yellow";
+  // }
 
-   
+
 
   // チェックボタン押下の処理
   // document.querySelector('#checkButton').addEventListener('click', () => {
@@ -129,7 +122,7 @@
     greenList.textContent = "";
 
 
-    //検索ワードの取得
+    //検索ワードの取得…空白欄を埋める
     let yellowLength = criteriaTextYellow.length;
     let orangeLength = criteriaTextOrange.length;
     let redLength = criteriaTextRed.length;
@@ -170,6 +163,58 @@
 
     countGreen = new Array(yellowLength);
     countGreen.fill(0);
+
+
+
+    //検索ワードを単一配列にする
+    for (let i = 1; i < criteriaTextYellow.length; i++) {
+      // for (let i = 1; i < 10; i++) {
+      criteriaTextMulti[i] = [];
+
+      criteriaTextMulti[i][0] = criteriaTextYellow[i];
+      criteriaTextMulti[i][1] = 'yellow';
+      criteriaTextMulti[i][2] = criteriaTextMulti[i][0].length;
+      criteriaTextMulti[i][3] = criteriaTextOrange[i];
+    }
+
+
+    for (let i = 1; i < criteriaTextBlue.length - 1; i++) {
+      let j = yellowLength + i * 2 - 1;
+      criteriaTextMulti[j] = [];
+      criteriaTextMulti[j + 1] = [];
+
+      criteriaTextMulti[j][0] = criteriaTextBlue[i];
+      criteriaTextMulti[j][1] = 'blue';
+      criteriaTextMulti[j][2] = criteriaTextMulti[j][0].length;
+      criteriaTextMulti[j][3] = "◀︎" + criteriaTextRed[i];
+
+      criteriaTextMulti[j + 1][0] = criteriaTextRed[i];
+      criteriaTextMulti[j + 1][1] = 'red';
+      criteriaTextMulti[j + 1][2] = criteriaTextMulti[j + 1][0].length;
+      criteriaTextMulti[j + 1][3] = "▶" + criteriaTextBlue[i];
+    }
+
+    for (let i = 1; i < criteriaTextGreen.length - 1; i++) {
+      let j = yellowLength + blueLength + redLength + i;
+      if (criteriaTextGreen[i] == "") {
+        continue;
+      } else {
+        criteriaTextMulti[j] = [];
+        criteriaTextMulti[j + 1] = [];
+        criteriaTextMulti[j][0] = criteriaTextGreen[i];
+        criteriaTextMulti[j][1] = 'green';
+        criteriaTextMulti[j][2] = criteriaTextMulti[j][0].length;
+        criteriaTextMulti[j][3] = criteriaTextGreen2[i];
+      }
+    }
+
+    // console.log("criteriaMulti", criteriaTextMulti);
+
+
+// 文字列の長い順に並べ替える
+function compareLength(a,b){
+  return b - a;
+}
 
 
     //テキストとの照合
@@ -400,7 +445,7 @@
 
     }  // ループ終わり
 
-    console.log("outputText", outputText);
+    // console.log("outputText", outputText);
 
   }   //hyokiCheck() の終わり
 
